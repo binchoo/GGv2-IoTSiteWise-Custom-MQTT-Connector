@@ -1,11 +1,9 @@
 package org.binchoo.connector.mqttsitewise;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public class ComponentConfiguration {
+@Data
+public class ComponentConfig {
 
     /**
      * Example: "/clients/mqtt/iotsitewise/+/+"

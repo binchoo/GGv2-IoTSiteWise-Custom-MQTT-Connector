@@ -2,30 +2,33 @@ package org.binchoo.connector.mqttsitewise;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import software.amazon.awssdk.aws.greengrass.SubscribeToTopicResponseHandler;
 
 public class Main {
 
     public static void main(String... args) {
+        Thread t = startConnector();
+        wait(t);
+    }
+
+    private static Thread startConnector() {
         ApplicationContext context = new AnnotationConfigApplicationContext(Bootstrap.class);
         MqttSiteWiseConnector connector = context.getBean(MqttSiteWiseConnector.class);
 
-        SubscribeToTopicResponseHandler subscriptionHandler = connector.run();
+        Thread thread = new Thread(connector) {{
+            start();
+        }};
 
-        if (subscriptionHandler != null) {
-            System.out.println("Successfully subscribed to topic: " + connector.getTopicFilter());
+        System.out.println("Connector is running");
+        return thread;
+    }
 
-            try {
-                while (true) {
-                    System.out.println("[system status] OK");
-                    Thread.sleep(10000);
-                }
-            } catch (InterruptedException e) {
-                System.err.println("Subscription is interrupted.");
-            }
-            subscriptionHandler.closeStream();
+    private static void wait(Thread t) {
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            System.err.println("Connector is interrupted");
+            throw new RuntimeException(e);
         }
-
-        System.out.println("Application is closing.");
+        System.out.println("Component is closing");
     }
 }
