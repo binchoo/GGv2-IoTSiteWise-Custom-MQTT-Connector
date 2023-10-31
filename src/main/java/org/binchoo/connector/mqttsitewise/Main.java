@@ -10,8 +10,7 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String... args) {
-        Thread thread = startConnector();
-        wait(thread);
+        keep(startConnector());
     }
 
     private static Thread startConnector() {
@@ -26,7 +25,7 @@ public class Main {
         return thread;
     }
 
-    private static void wait(Thread thread) {
+    private static void keep(Thread thread) {
         try {
             thread.join();
         } catch (InterruptedException e) {
