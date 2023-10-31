@@ -1,7 +1,7 @@
 package org.binchoo.connector.mqttsitewise;
 
 import lombok.Getter;
-import org.binchoo.connector.stream.SiteWiseEdgeStream;
+import org.binchoo.connector.stream.EdgeStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,13 +24,13 @@ final public class MqttSiteWiseConnector implements Runnable {
     private final GreengrassCoreIPCClientV2 ipcClient;
     private final ComponentConfig input;
 
-    private final SiteWiseEdgeStream stream;
+    private final EdgeStream stream;
 
     private final String topicFilter;
     private final String aliasPattern;
 
     public MqttSiteWiseConnector(GreengrassCoreIPCClientV2 ipcClient,
-                                 SiteWiseEdgeStream stream, ComponentConfig input) {
+                                 EdgeStream stream, ComponentConfig input) {
         this.ipcClient = ipcClient;
         this.input = input;
 
@@ -49,8 +49,8 @@ final public class MqttSiteWiseConnector implements Runnable {
 
         try {
             while (true) {
-                Thread.sleep(10000);
                 logger.info("MqttSiteWiseConnector status is OK");
+                Thread.sleep(10000);
             }
         } catch (InterruptedException e) {
             logger.info("MqttSiteWiseConnector is interrupted");
@@ -73,7 +73,7 @@ final public class MqttSiteWiseConnector implements Runnable {
             String propertyAlias = this.synthesisPropertyAlias(aliasPattern, assetName, propertyName);
 
             TypedDataMessage payload = TypedDataMessage.fromBytes(message.getMessage());
-            stream.sendValue(propertyAlias, payload.getData());
+            payload.sendTo(propertyAlias, stream);
         }
 
         @Override

@@ -1,13 +1,17 @@
 package org.binchoo.connector.mqttsitewise;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
 
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String... args) {
-        Thread t = startConnector();
-        wait(t);
+        Thread thread = startConnector();
+        wait(thread);
     }
 
     private static Thread startConnector() {
@@ -18,17 +22,17 @@ public class Main {
             start();
         }};
 
-        System.out.println("Connector is running");
+        logger.info("Connector is running");
         return thread;
     }
 
-    private static void wait(Thread t) {
+    private static void wait(Thread thread) {
         try {
-            t.join();
+            thread.join();
         } catch (InterruptedException e) {
-            System.err.println("Connector is interrupted");
+            logger.warn("Connector is interrupted");
             throw new RuntimeException(e);
         }
-        System.out.println("Component is closing");
+        logger.info("Component is closing");
     }
 }

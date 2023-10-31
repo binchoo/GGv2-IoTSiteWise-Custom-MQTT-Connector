@@ -4,8 +4,8 @@ import com.amazonaws.greengrass.streammanager.client.StreamManagerClient;
 import com.amazonaws.greengrass.streammanager.client.StreamManagerClientFactory;
 import com.amazonaws.greengrass.streammanager.client.exception.StreamManagerException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.binchoo.connector.stream.EdgeStream;
 import org.binchoo.connector.stream.SiteWiseEdgeStream;
-import org.binchoo.connector.stream.SiteWiseProcessorInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -62,16 +62,15 @@ public class Bootstrap {
     }
 
     @Bean
-    public SiteWiseEdgeStream sitewiseEdgeStream(StreamManagerClient streamManagerClient) {
-
-        return new SiteWiseProcessorInputStream(streamManagerClient);
+    public SiteWiseEdgeStream sitewiseEdgeStream() {
+        return SiteWiseEdgeStream.processorInputStream();
     }
 
     @Bean
     public MqttSiteWiseConnector mqttSiteWiseConnector(GreengrassCoreIPCClientV2 ipcClient,
-                                                       SiteWiseEdgeStream siteWiseEdgeStream,
+                                                       EdgeStream edgeStream,
                                                        ComponentConfig componentConfig) {
 
-        return new MqttSiteWiseConnector(ipcClient, siteWiseEdgeStream, componentConfig);
+        return new MqttSiteWiseConnector(ipcClient, edgeStream, componentConfig);
     }
 }

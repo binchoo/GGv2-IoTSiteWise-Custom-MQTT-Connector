@@ -1,6 +1,7 @@
 package org.binchoo.connector.mqttsitewise;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.binchoo.connector.stream.EdgeStream;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -13,17 +14,21 @@ public class TypedDataMessage implements Serializable {
     private String dataType;
     private Long timestamp;
 
-    public Object getData() {
+    public void sendTo(String propertyAlias, EdgeStream via) {
         if ("integer".equals(dataType) || "int".equals(dataType))
-            return Integer.parseInt(data);
+            via.sendValue(propertyAlias, Long.parseLong(data));
         else if ("double".equals(dataType) || "float".equals(dataType))
-            return Double.parseDouble(data);
+            via.sendValue(propertyAlias, Double.parseDouble(data));
         else if ("string".equals(dataType) || "str".equals(dataType))
-            return data;
+            via.sendValue(propertyAlias, data);
         else if ("boolean".equals(dataType) || "bool".equals(dataType))
-            return Boolean.parseBoolean(data);
+            via.sendValue(propertyAlias, Boolean.parseBoolean(data));
         else
             throw new RuntimeException(String.format("Invalid data type %s", dataType));
+    }
+
+    public String getData() {
+        return this.data;
     }
 
     public String getDataType() {
