@@ -1,0 +1,13 @@
+accessControl:
+  "aws.greengrass.ipc.pubsub":
+    "org.binchoo.connector.mqttsitewise.MqttSiteWiseConnector:Subscription":
+      policyDescription: "Allow subscribing to topics."
+      operations:
+        - "aws.greengrass#SubscribeToTopic"
+      resources:
+        - "*"
+  configuration:
+    topicFilter: "mqtt/iotsitewise/+/+"
+    assetKey: "3"
+    propertyKey: "4"
+    aliasPattern: "/EstrellaWinds/xandar/hvac-model/{asset}/{property}"

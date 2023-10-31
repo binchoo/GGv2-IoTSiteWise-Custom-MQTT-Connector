@@ -1,8 +1,0 @@
-{
-  "configuration": {
-    "topicFilter": "/clients/mqtt/iotsitewise/+/+",
-    "assetKey": 4,
-    "propertyKey": 5,
-    "aliasPattern": "/EstrellaWinds/xandar/hvac-model/{asset}/{property}"
-  }
-}
