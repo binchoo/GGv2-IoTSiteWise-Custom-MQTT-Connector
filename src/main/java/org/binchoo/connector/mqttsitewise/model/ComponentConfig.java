@@ -1,4 +1,4 @@
-package org.binchoo.connector.mqttsitewise;
+package org.binchoo.connector.mqttsitewise.model;
 
 import lombok.Data;
 

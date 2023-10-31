@@ -1,9 +1,11 @@
-package org.binchoo.connector.mqttsitewise;
+package org.binchoo.connector.mqttsitewise.config;
 
 import com.amazonaws.greengrass.streammanager.client.StreamManagerClient;
 import com.amazonaws.greengrass.streammanager.client.StreamManagerClientFactory;
 import com.amazonaws.greengrass.streammanager.client.exception.StreamManagerException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.binchoo.connector.mqttsitewise.MqttSiteWiseConnector;
+import org.binchoo.connector.mqttsitewise.model.ComponentConfig;
 import org.binchoo.connector.stream.EdgeStream;
 import org.binchoo.connector.stream.SiteWiseEdgeStream;
 import org.slf4j.Logger;

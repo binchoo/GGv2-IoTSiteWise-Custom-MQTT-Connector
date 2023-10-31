@@ -1,4 +1,4 @@
-package org.binchoo.connector.mqttsitewise;
+package org.binchoo.connector.mqttsitewise.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.binchoo.connector.stream.EdgeStream;

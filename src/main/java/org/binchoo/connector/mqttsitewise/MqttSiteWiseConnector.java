@@ -1,6 +1,8 @@
 package org.binchoo.connector.mqttsitewise;
 
 import lombok.Getter;
+import org.binchoo.connector.mqttsitewise.model.ComponentConfig;
+import org.binchoo.connector.mqttsitewise.model.TypedDataMessage;
 import org.binchoo.connector.stream.EdgeStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
